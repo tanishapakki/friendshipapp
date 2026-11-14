@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Hangout Pact</title>
+<style>
+:root{--cream:#fff8ee;--ink:#4a3f45;--soft:#8c7f86;--pink:#f8d3dc;--pink2:#f4b6c4;--lav:#ddd5f6;--butter:#fbebb2;--line:#efe3d3;--r:22px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);background-image:radial-gradient(#f0e2cf 1px,transparent 1px);background-size:22px 22px;color:var(--ink);font:16px/1.45 ui-rounded,"SF Pro Rounded","Nunito","Segoe UI",system-ui,sans-serif;padding-bottom:92px}
+.wrap{max-width:680px;margin:0 auto;padding:18px 16px}
+header{text-align:center;padding:10px 0 4px}
+header h1{margin:0;font-size:28px;letter-spacing:-.5px;font-family:"Georgia","Times New Roman",serif;font-style:italic}
+header p{margin:2px 0 0;color:var(--soft);font-size:14px}
+h2{margin:0;font-size:22px}h3{margin:18px 0 8px;font-size:17px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:0 0 14px;box-shadow:0 6px 18px rgba(120,90,80,.09);position:relative;animation:in .35s ease both}
+.card:nth-child(odd){transform:rotate(-.3deg)}.card:nth-child(even){transform:rotate(.3deg)}
+.tape::before{content:"";position:absolute;top:-9px;left:50%;width:64px;height:18px;margin-left:-32px;background:rgba(251,235,178,.9);transform:rotate(-3deg);border-radius:3px}
+@keyframes in{from{opacity:0;translate:0 8px}}
+.pair{display:flex;align-items:flex-start;justify-content:space-around;gap:6px}
+.amp{align-self:center;font-family:Georgia,serif;font-style:italic;font-size:28px;color:var(--pink2)}
+.friend{text-align:center;flex:1;position:relative;padding-top:12px}
+.friend.lead::before{content:"👑";position:absolute;top:-8px;left:50%;margin-left:4px;font-size:24px;rotate:14deg;animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{translate:0 -3px}}
+.av{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:26px;font-weight:800;margin:0 auto 6px;border:3px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.a0{background:var(--pink)}.a1{background:var(--lav)}
+.nm{border:0;border-bottom:2px dashed var(--line);background:transparent;text-align:center;font:inherit;font-weight:700;width:100%;max-width:130px;color:var(--ink);padding:2px}
+.nm:focus{outline:none;border-color:var(--pink2)}
+.pts{font-size:34px;font-weight:800;line-height:1.2}.pts small{font-size:13px;color:var(--soft);margin-left:3px;font-weight:600}
+.ahead{text-align:center;margin:10px 0 0;color:var(--soft)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{border-radius:18px;padding:14px;min-height:96px}.stat.p{background:var(--butter)}.stat.l{background:var(--lav)}
+.stat b{display:block;font-size:26px;line-height:1.2}.stat span{font-size:14px;color:#6b5d63}
+.emo{font-size:26px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:6px 0 14px;flex-wrap:wrap}
+.btn{background:var(--pink2);border:0;border-radius:999px;padding:10px 18px;font:inherit;font-weight:700;color:#5a3a44;cursor:pointer;box-shadow:0 3px 0 #e79fb0;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}.btn:active{transform:translateY(2px);box-shadow:none}
+.btn.big{width:100%;padding:14px;font-size:17px}
+.btn.lv{background:var(--lav);box-shadow:0 3px 0 #c4b8ec}
+.btn2{background:#fff;border:2px solid var(--line);border-radius:999px;padding:8px 16px;font:inherit;font-weight:600;color:var(--ink);cursor:pointer}
+.chip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font:inherit;cursor:pointer;transition:background .2s,transform .2s}
+.chip.on{background:var(--butter);border-color:#efd77f;transform:scale(1.03)}
+.link{background:none;border:0;color:var(--soft);font:inherit;text-decoration:underline;cursor:pointer;padding:8px 0 0}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #b9a6f0;outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.acts{justify-content:flex-end}
+.tag{display:inline-block;background:var(--lav);border-radius:999px;padding:1px 10px;font-size:12px;font-weight:700}
+.badge{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;background:var(--butter)}
+.badge.done{background:#e4f3dc}.badge.bad{background:var(--pink)}
+.sub{color:var(--soft);font-size:14px}
+.title{font-weight:700;font-size:17px;margin:4px 0}
+.hist{display:flex;gap:12px;align-items:center;padding:12px 16px}
+.d{font-weight:800;font-size:20px;min-width:52px;text-align:center;border-radius:14px;padding:6px 0;background:var(--line)}
+.d.up{background:#e4f3dc;color:#3d6b34}.d.down{background:var(--pink);color:#9a3a52}
+.empty{text-align:center;padding:30px 10px;color:var(--soft)}.empty .emo{font-size:44px;display:block}
+#pick{background:var(--butter);text-align:center;margin-bottom:14px}
+#pick.pop{animation:pop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{scale:.8}}
+#pickText{font-size:22px;font-weight:800;margin:4px 0}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:rgba(255,248,238,.95);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+nav button{flex:1;background:none;border:0;font:inherit;font-size:12px;font-weight:600;color:var(--soft);cursor:pointer;padding:6px 0;border-radius:14px}
+nav button span{display:block;font-size:22px}nav button.on{background:var(--pink);color:var(--ink)}
+dialog{border:0;border-radius:var(--r);padding:20px;width:min(92vw,420px);box-shadow:0 20px 50px rgba(74,63,69,.3);color:var(--ink);background:#fff}
+dialog[open]{animation:pop .3s ease}
+dialog::backdrop{background:rgba(74,63,69,.35)}
+.f h3{margin-top:0}.f label{display:block;font-weight:600;margin:10px 0 4px;font-size:14px}
+.f input:not([type=checkbox]),.f select,.f textarea{width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:14px;font:inherit;background:var(--cream);color:var(--ink)}
+.f .ck{display:flex;gap:8px;align-items:flex-start;font-weight:500}
+#toast{position:fixed;left:50%;bottom:96px;translate:-50% 20px;background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:.3s;font-size:14px;max-width:90vw;text-align:center}
+#toast.on{opacity:1;translate:-50% 0}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>The Hangout Pact</h1><p>one hangout a week, no excuses</p></header>
+  <main id="app"></main>
+</div>
+<nav>
+  <button data-tab="home"><span>🏠</span>Home</button>
+  <button data-tab="hangouts"><span>📅</span>Hangouts</button>
+  <button data-tab="ideas"><span>💡</span>Ideas</button>
+  <button data-tab="points"><span>⭐</span>Points</button>
+</nav>
+<dialog id="dlg"></dialog>
+<div id="toast" role="status"></div>
+
+<script>
+const KEY = 'hangout-pact-v1';
+const CATS = {Food:'🍰',Adventure:'🧭',Creative:'🎨','At home':'🛋️',Outdoors:'🌿',Movies:'🎬',Shopping:'🛍️',Travel:'✈️',Other:'✨'};
+const STATUS = {new:'Not tried',planned:'Planned',completed:'Completed'};
+const def = () => ({names:['Mia','Zoe'],hangouts:[],ideas:[],history:[]});
+let S; try { S = JSON.parse(localStorage.getItem(KEY)) || def(); } catch (e) { S = def(); }
+let tab = 'home', picked = null;
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Math.random().toString(36).slice(2, 9);
+const ini = n => (n.trim()[0] || '?').toUpperCase();
+const fmt = t => new Date(t).toLocaleString([], {weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+const prevWeek = t => { const d = new Date(t); d.setDate(d.getDate() - 7); return d.getTime(); };
+const wk = t => { const d = new Date(t); d.setHours(0,0,0,0); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return d.getTime(); };
+const pts = i => S.history.filter(h => h.who === i).reduce((a, h) => a + h.delta, 0);
+const log = (who, delta, reason) => S.history.push({id:uid(), ts:Date.now(), who, delta, reason});
+
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { toast('Could not save. Browser storage seems to be blocked.'); } }
+let tt; function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('on'), 2600); }
+
+function streak() {
+  const ws = new Set(S.hangouts.filter(h => h.status === 'completed').map(h => wk(h.date)));
+  let c = wk(Date.now()), n = 0;
+  if (!ws.has(c)) c = prevWeek(c);
+  while (ws.has(c)) { n++; c = prevWeek(c); }
+  return n;
+}
+function weekStatus() {
+  const w = wk(Date.now()), hs = S.hangouts.filter(h => wk(h.date) === w);
+  const done = hs.find(h => h.status === 'completed');
+  if (done) return {e:'🎉', t:'Hangout done!', s:esc(done.title)};
+  const pl = hs.filter(h => h.status === 'planned').sort((a, b) => a.date - b.date)[0];
+  if (pl) return {e:'📅', t:'Planned', s:esc(pl.title) + ' on ' + fmt(pl.date)};
+  return {e:'🌱', t:'Nothing planned yet', s:'Plan a hangout for this week.'};
+}
+const empty = (e, t, s) => `<div class="empty"><span class="emo">${e}</span><b>${t}</b><br>${s}</div>`;
+const lead = () => { const a = pts(0), b = pts(1); return a === b ? "It's a tie! 🤝" : `${esc(S.names[a > b ? 0 : 1])} is ahead by ${Math.abs(a - b)} pts 👑`; };
+const scoreboard = () => { const p = [pts(0), pts(1)]; return `<div class="pair">${[0,1].map(i => `<div class="friend ${p[i] > p[1-i] ? 'lead' : ''}"><div class="av a${i}">${esc(ini(S.names[i]))}</div>${i === 0 || true ? '' : ''}<input class="nm" data-name="${i}" value="${esc(S.names[i])}" maxlength="14" aria-label="Friend ${i+1} name"><div class="pts">${p[i]}<small>pts</small></div></div>`).join('<div class="amp">&amp;</div>')}</div><p class="ahead">${lead()}</p>`; };
+
+/* ---------- views ---------- */
+function homeV() {
+  const w = weekStatus(), s = streak();
+  return `<section class="card tape">${scoreboard()}</section>
+  <div class="stats">
+    <div class="card stat p"><span class="emo">${w.e}</span><b>${w.t}</b><span>${w.s}</span></div>
+    <div class="card stat l"><span class="emo">🔥</span><b>${s} week${s === 1 ? '' : 's'}</b><span>${s ? 'weekly streak' : 'Start your streak this week!'}</span></div>
+  </div>
+  <button class="btn big" data-act="newH">+ Add a hangout</button>`;
+}
+function hcard(h) {
+  const n = S.names; let body = '';
+  if (h.status === 'planned') body = `<div class="row">${[0,1].map(i => `<button class="chip ${h.conf[i] ? 'on' : ''}" data-act="conf" data-id="${h.id}" data-i="${i}">${h.conf[i] ? '✓' : '○'} ${esc(n[i])} was there</button>`).join('')}</div><button class="link" data-act="cancelH" data-id="${h.id}">Cancel or reject this hangout</button>`;
+  const badge = {planned:'<span class="badge">Planned</span>', completed:'<span class="badge done">Completed · +20 each</span>', cancelled:'<span class="badge bad">Cancelled</span>'}[h.status];
+  return `<div class="card"><div>${badge}</div><div class="title">${esc(h.title)}</div><div class="sub">${fmt(h.date)}</div>${h.note ? `<div class="sub">${esc(h.note)}</div>` : ''}${body}</div>`;
+}
+function hangV() {
+  const hs = [...S.hangouts].sort((a, b) => b.date - a.date);
+  return `<div class="bar"><h2>Hangouts</h2><button class="btn" data-act="newH">+ Add</button></div>` +
+    (hs.length ? hs.map(hcard).join('') : empty('📅', 'No hangouts yet', 'Add your first one and pick a date.'));
+}
+function ideaV() {
+  const pk = S.ideas.find(i => i.id === picked);
+  const list = S.ideas.map(i => `<div class="card"><div class="title">${CATS[i.cat] || '✨'} ${esc(i.title)}</div>${i.desc ? `<div>${esc(i.desc)}</div>` : ''}<div class="row" style="align-items:center"><span class="tag">${esc(i.cat)}</span><span class="sub">suggested by ${esc(S.names[i.by] ?? '?')}</span></div>
+    <div class="row" style="align-items:center"><select class="chip" data-status="${i.id}" aria-label="Status">${Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${i.status === k ? 'selected' : ''}>${v}</option>`).join('')}</select><span style="flex:1"></span><button class="btn2" data-act="editI" data-id="${i.id}">Edit</button><button class="btn2" data-act="delI" data-id="${i.id}">Delete</button></div></div>`).join('');
+  return `<div class="bar"><h2>Ideas</h2><div class="row" style="margin:0"><button class="btn lv" data-act="rand">🎲 Random idea</button><button class="btn" data-act="newI">+ Add</button></div></div>
+  <div id="pick" class="card" ${pk ? '' : 'hidden'}><span class="sub">Your next hangout could be…</span><div id="pickText">${pk ? CATS[pk.cat] + ' ' + esc(pk.title) : ''}</div></div>` +
+    (S.ideas.length ? list : empty('💡', 'No ideas yet', 'Add something you both want to try.'));
+}
+function ptsV() {
+  const hist = [...S.history].sort((a, b) => b.ts - a.ts);
+  return `<h2 style="margin-bottom:14px">Points</h2><section class="card tape">${scoreboard()}</section><h3>History</h3>` +
+    (hist.length ? hist.map(h => `<div class="card hist"><div class="d ${h.delta > 0 ? 'up' : h.delta < 0 ? 'down' : ''}">${h.delta > 0 ? '+' : ''}${h.delta}</div><div><b>${esc(S.names[h.who])}</b><br><span class="sub">${esc(h.reason)}</span><br><span class="sub">${fmt(h.ts)}</span></div></div>`).join('')
+      : empty('⭐', 'No points yet', 'Complete a hangout together to earn +20 each.'));
+}
+function render() {
+  $('#app').innerHTML = {home:homeV, hangouts:hangV, ideas:ideaV, points:ptsV}[tab]();
+  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+}
+
+/* ---------- dialog helper ---------- */
+function form(title, html, onOk, okText = 'Save') {
+  const d = $('#dlg');
+  d.innerHTML = `<form class="f"><h3>${title}</h3>${html}<div class="row acts"><button type="button" class="btn2" data-close>Never mind</button><button class="btn">${okText}</button></div></form>`;
+  const f = d.querySelector('form');
+  f.onsubmit = e => { e.preventDefault(); if (onOk(new FormData(f)) !== false) d.close(); };
+  d.showModal();
+}
+const nameOpts = sel => S.names.map((n, i) => `<option value="${i}" ${sel === i ? 'selected' : ''}>${esc(n)}</option>`).join('');
+
+/* ---------- actions ---------- */
+const act = {
+  newH() {
+    form('Add a hangout', `<label>What are you doing?</label><input name="title" required maxlength="60" placeholder="Bubble tea + thrift run">
+      <label>When?</label><input name="date" type="datetime-local" required>`, fd => {
+      const date = new Date(fd.get('date')).getTime();
+      if (isNaN(date)) { toast('Pick a valid date and time.'); return false; }
+      S.hangouts.push({id:uid(), title:fd.get('title').trim(), date, status:'planned', conf:[false, false]});
+      save(); tab = 'hangouts'; render(); toast('Hangout added!');
+    }, 'Add hangout');
+  },
+  conf({id, i}) {
+    const h = S.hangouts.find(x => x.id === id); h.conf[i] = !h.conf[i];
+    if (h.conf[0] && h.conf[1]) {
+      h.status = 'completed';
+      log(0, 20, `Completed: ${h.title}`); log(1, 20, `Completed: ${h.title}`);
+      toast('Hangout complete! +20 points each 🎉');
+    }
+    save(); render();
+  },
+  cancelH({id}) {
+    const h = S.hangouts.find(x => x.id === id);
+    form('Cancel or reject', `<label>What happened?</label><select name="type"><option>Cancelled</option><option>Rejected</option></select>
+      <label>Who?</label><select name="who">${nameOpts(0)}</select>
+      <label>Reason</label><input name="reason" required maxlength="100" placeholder="Tell your friend why">
+      <label class="ck"><input type="checkbox" name="valid"> <span>It's a valid reason, so no points are lost. You both agree.</span></label>`, fd => {
+      const who = +fd.get('who'), type = fd.get('type'), reason = fd.get('reason').trim(), valid = fd.get('valid') === 'on';
+      if (!valid && !confirm(`${S.names[who]} will lose 15 points. Continue?`)) return false;
+      h.status = 'cancelled'; h.note = `${type} by ${S.names[who]}: ${reason}`;
+      log(who, valid ? 0 : -15, `${type} "${h.title}" (${valid ? 'valid reason, no penalty' : 'no valid reason'}): ${reason}`);
+      save(); render(); toast(valid ? 'Saved. No points lost.' : '-15 points recorded.');
+    }, 'Confirm');
+  },
+  newI() { ideaForm(); },
+  editI({id}) { ideaForm(S.ideas.find(i => i.id === id)); },
+  delI({id}) {
+    const i = S.ideas.find(x => x.id === id);
+    if (!confirm(`Delete "${i.title}"?`)) return;
+    S.ideas = S.ideas.filter(x => x.id !== id); if (picked === id) picked = null;
+    save(); render();
+  },
+  rand() {
+    const pool = S.ideas.filter(i => i.status !== 'completed');
+    if (!pool.length) return toast('Add an idea that is not completed yet.');
+    const box = $('#pick'), el = $('#pickText'); box.hidden = false; box.classList.remove('pop');
+    let n = 0;
+    const t = setInterval(() => {
+      const p = pool[Math.floor(Math.random() * pool.length)];
+      el.textContent = CATS[p.cat] + ' ' + p.title;
+      if (++n > 12) { clearInterval(t); picked = p.id; void box.offsetWidth; box.classList.add('pop'); }
+    }, 80);
+  }
+};
+function ideaForm(i) {
+  form(i ? 'Edit idea' : 'Add an idea', `<label>Title</label><input name="title" required maxlength="60" value="${i ? esc(i.title) : ''}">
+    <label>Description (optional)</label><textarea name="desc" rows="2" maxlength="200">${i ? esc(i.desc) : ''}</textarea>
+    <label>Category</label><select name="cat">${Object.keys(CATS).map(c => `<option ${i && i.cat === c ? 'selected' : ''}>${c}</option>`).join('')}</select>
+    <label>Suggested by</label><select name="by">${nameOpts(i ? i.by : 0)}</select>`, fd => {
+    const o = {title:fd.get('title').trim(), desc:fd.get('desc').trim(), cat:fd.get('cat'), by:+fd.get('by')};
+    if (i) Object.assign(i, o); else S.ideas.unshift({id:uid(), status:'new', ...o});
+    save(); render();
+  });
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-act],[data-tab],[data-close]'); if (!b) return;
+  if (b.hasAttribute('data-close')) return $('#dlg').close();
+  if (b.dataset.tab) { tab = b.dataset.tab; render(); window.scrollTo(0, 0); return; }
+  act[b.dataset.act](b.dataset);
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.name !== undefined) { S.names[t.dataset.name] = t.value.trim() || 'Friend ' + (+t.dataset.name + 1); save(); render(); }
+  else if (t.dataset.status) { S.ideas.find(i => i.id === t.dataset.status).status = t.value; save(); render(); }
+});
+render();
+</script>
+</body>
+</html>
